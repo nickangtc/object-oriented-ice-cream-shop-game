@@ -12,13 +12,7 @@ const config = {
     semi: ['error', 'always'],
     quotes: ['error', 'single'],
     'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
-    'no-underscore-dangle': [
-      'error', {
-        allowAfterThis: true,
-        allowAfterSuper: true,
-        enforceInMethodNames: false,
-      },
-    ],
+    'no-underscore-dangle': 'off',
     'import/no-unresolved': 'off',
   },
 

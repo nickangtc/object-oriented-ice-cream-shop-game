@@ -6,16 +6,17 @@ const { GamePlayError } = require('./errors');
  */
 class StorageDevice {
   constructor(items) {
-    this.store = {};
-    this.itemTypes = this.getNameStrings(items);
+    this.itemTypes = this._getNameStrings(items);
+    this.store = this._initialiseStore();
   }
 }
 
 StorageDevice.prototype.nameString = 'Storage Device';
 
-StorageDevice.prototype.getNameStrings = function getNameStrings(items) {
+StorageDevice.prototype._getNameStrings = function _getNameStrings(items) {
   if (!Array.isArray(items)) throw new TypeError('StorageDevice must be initialised with an array as first argument');
   if (items.length === 0) throw new Error('StorageDevice must be initialised with a non-empty array as first argument');
+
   return items.map((item) => {
     if (Object.prototype.hasOwnProperty.call(item, 'getNameString')) {
       return item.getNameString();
@@ -24,10 +25,21 @@ StorageDevice.prototype.getNameStrings = function getNameStrings(items) {
   });
 };
 
+StorageDevice.prototype._initialiseStore = function _initialiseStore() {
+  const store = {};
+  this.itemTypes.forEach((item) => {
+    store[item] = 0;
+  });
+  return store;
+};
+
 StorageDevice.prototype.deposit = function deposit(itemClass, qty = 0) {
   if (typeof itemClass !== 'function') throw new TypeError('deposit() must be passed a class as first argument');
+  if (qty < 0) return false;
 
+  const quantity = Math.floor(qty);
   let itemType = '';
+
   if (Object.prototype.hasOwnProperty.call(itemClass, 'getNameString')) {
     itemType = itemClass.getNameString();
   } else {
@@ -36,13 +48,14 @@ StorageDevice.prototype.deposit = function deposit(itemClass, qty = 0) {
 
   if (!this._isValidType(itemType)) throw new GamePlayError('This item does not belong here.');
 
-  return false;
+  this.store[itemType] += quantity;
+  return true;
 };
 
 StorageDevice.prototype._isValidType = function _isValidType(type) {
   if (this.itemTypes.includes(type)) return true;
   return false;
-}
+};
 
 module.exports = {
   StorageDevice,

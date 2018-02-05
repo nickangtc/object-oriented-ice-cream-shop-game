@@ -17,11 +17,11 @@ In building this game, I wanted to learn by doing more web development. I'm guid
 - Do TDD (test driven development). I've never actually worked on a project in a TDD fashion. I'd like to test drive it (get it?) to form an opinion for myself.
 - Document every "a-ha!" moment, so I can look back on how much (or little) I've learned and maybe translate some of those learning into blog posts on [nickang.com](http://nickang.com).
 
-### Lessons learned
+## Lessons learned
 
 I'm learning as I go with this little experiment of a project. Here I list down the "a-ha!" moments and what they mean for future projects. I strive to be judicious in adding learning points because I know that obvious things mostly aren't so obvious when revisited a week later...
 
-#### 1. Configuration / Dev env set up
+### 1. Configuration / Dev env set up
 
 Like any project, I always prefer to start simple. I'd initially thought I might be able to get away with not using a bundler like Webpack (at most I'd use ES5 syntax without Babel!), but I quickly ran into a problem.
 
@@ -53,7 +53,7 @@ module.exports = config;
 
 - Linter. Install and use ESLint (`npm install --save-dev eslint`) for project, and to enable on-the-fly linting for your code editor, install the "linter-eslint" package ([Atom package](https://atom.io/packages/linter-eslint)).
 
-#### 2. Code quality, linting and JavaScript style guide
+### 2. Code quality, linting and JavaScript style guide
 
 My ESLint extends "airbnb-base" ([package](https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb-base)), which means I'm adopting the [Airbnb style guide](https://github.com/airbnb/javascript) as the main set of linting rules for this project.
 
@@ -63,7 +63,7 @@ My ESLint extends "airbnb-base" ([package](https://github.com/airbnb/javascript/
 - I like using dangling underscores to indicate "private" methods. Unlike the ESLint default of "[no-underscore-dangle](https://eslint.org/docs/rules/no-underscore-dangle)", I find that naming methods `_isValidType()` is useful to indicate that it should never be called from outside a class.
     - To clarify, as far as I know, there are no supported ways of creating true private methods. I'm for the use of underscore dangles as a visual communication tool to convey "hands off from outside the class".
 
-#### 3. Testing (with Jest)
+### 3. Testing (with Jest)
 
 - Testing exception with `toThrow()`. In order to test the expectation that a function throws an error, you need to wrap it with another function ([reference](https://github.com/facebook/jest/issues/781)):
 
@@ -143,20 +143,20 @@ describe('StorageDevice', () => {
 });
 ```
 
-#### 4. Object oriented programming
+### 4. Object oriented programming
 
 - No need for redundant `super()`. If a class extends another base class and doesn't have any additional instance variables or methods, there's no need to define a `constructor` and call `super()`. Just declaring `class Cone extends IceCreamContainer {}` will do.
 - Pass instances around, not specific values. Instead of `deposit('Ice Cream Block', 100)`, it's much clearer to do `deposit(new IceCreamBlock(), 100)` and handle the deposition logic in the method itself.
     - This was a decision recurred so many times that I had to write this down as a rule for myself - pass around instances (objects) instead of literal values that might represent the same thing, because it's easier to reason about.
-- Not a good idea to call `someObj.hasOwnProperty()` directly. This is due to 2 reasons:
+- Not a good idea to call `someObj.hasOwnProperty()` directly due to 2 reasons:
     - If an object was created with `Object.create(null)`, which apparently is a common use case for creating a Map data structure in JavaScript, that object would not have the `hasOwnProperty` property in its prototype chain! And if it is called, things break. See [this linter rule](https://eslint.org/docs/rules/no-prototype-builtins).
     - It's perfectly legal (though dangerous) to override the built-in `hasOwnProperty()` method, which if done, can cause hard-to-identify bugs.
     - Solution is to use `Object.prototype.hasOwnProperty.call(someObj, 'someProperty')`
 
-#### LAST. Miscellaneous
+### LAST. Miscellaneous
 
 - Singular vs plural naming in filenames is hard. "containers", "storage-devices", and... "ice-cream"? I'm tempted to rename it to "ice-creams" but that wouldn't make sense since we can't count cream... arrrgh.
 
-### Todo
+## Todo
 
 - Add JSDoc docstrings to all classes and methods
