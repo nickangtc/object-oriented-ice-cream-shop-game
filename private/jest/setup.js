@@ -10,4 +10,4 @@
 // global.$ = require('jquery');
 
 // Override to suppress library deprecation warnings, comment out to see warnings
-console.warn = () => {};
+// console.warn = () => {};

@@ -1,7 +1,9 @@
 import { IceCreamContainer, IceCreamBlock } from './constructors';
 
-$(document).ready(function () {
+$(document).ready(() => {
   console.log('jquery loaded');
 
-  console.log(new IceCreamContainer('poop'));
+  const ic = new IceCreamBlock();
+
+  console.log(ic.scoop());
 });

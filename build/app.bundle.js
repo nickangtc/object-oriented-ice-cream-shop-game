@@ -70,64 +70,15 @@
 "use strict";
 
 
-var _constructors = __webpack_require__(1);
+var _constructors = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./constructors\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 
 $(document).ready(function () {
   console.log('jquery loaded');
 
-  console.log(new _constructors.IceCreamContainer('poop'));
+  var ic = new _constructors.IceCreamBlock();
+
+  console.log(ic.scoop());
 });
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/**
- * Ice cream container
- */
-var IceCreamContainer = function IceCreamContainer(type) {
-  _classCallCheck(this, IceCreamContainer);
-
-  this.type = this.validateType(type) || 'cone';
-};
-
-IceCreamContainer.prototype.name = 'container';
-
-IceCreamContainer.prototype.validateType = function (type) {
-  var validTypes = ['cone', 'cup', 'tub'];
-  if (type) type = type.toLowerCase();
-  if (validTypes.includes(type)) return type;
-  return false;
-};
-
-/**
- * Ice cream block
- */
-
-var IceCreamBlock = function IceCreamBlock(flavour) {
-  _classCallCheck(this, IceCreamBlock);
-
-  this.flavour = this.validateFlavour(flavour) || 'vanilla';
-};
-
-IceCreamBlock.prototype.scoopsLeft = 50;
-
-IceCreamBlock.prototype.validateFlavour = function (f) {
-  var validFlavours = ['vanilla', 'cookies and cream', 'double chocolate', 'lemon sorbet', 'strawberry', 'rum and raisin'];
-  f = f.toLowerCase();
-  if (validFlavours.includes(f)) return f;
-  return false;
-};
-
-module.exports = {
-  IceCreamContainer: IceCreamContainer,
-  IceCreamBlock: IceCreamBlock
-};
 
 /***/ })
 /******/ ]);
