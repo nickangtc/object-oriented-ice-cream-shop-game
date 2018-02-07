@@ -70,14 +70,14 @@ My ESLint extends "airbnb-base" ([package](https://github.com/airbnb/javascript/
 ```js
 // This won't work because the error is not caught and will stop runtime
 it('should throw Error if value passed in is not instance of `ScoopOfIceCream`', () => {
-  const container = new IceCreamContainer();
+  const container = new Vessel();
   expect(container.add('fake scoop of ice cream'))
     .toThrow('you must pass `ScoopOfIceCream` instance into add()');
 });
 
 // This works - wrapping with another function will catch the error and let .toThrow() test pass
 it('should throw Error if value passed in is not instance of `ScoopOfIceCream`', () => {
-  const container = new IceCreamContainer();
+  const container = new Vessel();
   expect(() => {
     container.add('fake scoop of ice cream');
   }).toThrow('you must pass `ScoopOfIceCream` instance into add()');
@@ -145,7 +145,7 @@ describe('StorageDevice', () => {
 
 ### 4. Object oriented programming
 
-- No need for redundant `super()`. If a class extends another base class and doesn't have any additional instance variables or methods, there's no need to define a `constructor` and call `super()`. Just declaring `class Cone extends IceCreamContainer {}` will do.
+- No need for redundant `super()`. If a class extends another base class and doesn't have any additional instance variables or methods, there's no need to define a `constructor` and call `super()`. Just declaring `class Cone extends Vessel {}` will do.
 - Pass classes around, not specific values. Instead of `deposit('Ice Cream Block', 100)`, it's much clearer to do `deposit(IceCreamBlock, 100)` and handle the deposition logic in the method itself.
     - This was a decision recurred so many times that I had to write this down as a rule for myself - pass around instances (objects) instead of literal values that might represent the same thing, because it's easier to reason about.
 - Not a good idea to call `someObj.hasOwnProperty()` directly due to 2 reasons:

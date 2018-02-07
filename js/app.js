@@ -1,4 +1,4 @@
-import { IceCreamContainer, IceCreamBlock } from './constructors';
+import { Vessel, IceCreamBlock } from './constructors';
 
 $(document).ready(() => {
   console.log('jquery loaded');

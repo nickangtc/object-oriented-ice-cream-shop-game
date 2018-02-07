@@ -1,6 +1,6 @@
 const { StorageDevice } = require('../storage-devices');
 const { IceCreamBlock } = require('../ice-cream');
-const { Cone, Cup, Tub } = require('../containers');
+const { Cone, Cup, Tub } = require('../vessel');
 const { GamePlayError } = require('../errors');
 
 // TODO: Refactor this into a standalone game manifest file ("manifest.js" ?)
