@@ -4,7 +4,7 @@
 
 ### Goal
 
-This is first and foremost a game for fun, but why stop there? To make project meaningful to me, I'm adding functionality that allows programmers newer to web development to understand how objects are represented and can be used in JavaScript on a web page. It's an option you can toggle on and off mid-game.
+This is first and foremost a game for fun, but why stop there? To make this project more meaningful to me, I'm going to add functionality that allows programmers newer to web development to understand how objects are represented and can be used in JavaScript on a web page. It will be an option you can toggle on and off mid-game.
 
 ### Concept
 
@@ -60,7 +60,7 @@ My ESLint extends "airbnb-base" ([package](https://github.com/airbnb/javascript/
 - Trailing commas. I never knew this would be a good thing because it seemed so error prone, but I'm sold on Airbnb's [justification](https://github.com/airbnb/javascript#commas--dangling) for it: "This leads to _cleaner git diffs_. Also, transpilers like Babel will remove the additional trailing comma in the transpiled code which means you don’t have to worry about the trailing comma problem in legacy browsers."
     - Note: Not that cleaner git diffs is an important thing on this small project, but I like adopting best practices so that it feels natural when the time where it's required comes along!
 - Named function expressions. `Foo.prototype.bar = function bar() {}` - the second "bar" name seems redundant, but apparently it [aids in debugging](https://eslint.org/docs/rules/func-names) when viewing the stack trace, without which we're likely to see "anonymous function" instead of "bar".
-- I like using dangling underscores to indicate "private" methods. Unlike the ESLint default of "[no-underscore-dangle](https://eslint.org/docs/rules/no-underscore-dangle)", I find that naming methods `_isValidType()` is useful to indicate that it should never be called from outside a class.
+- I like using dangling underscores to indicate "private" methods. Unlike the ESLint default of "[no-underscore-dangle](https://eslint.org/docs/rules/no-underscore-dangle)", I find that naming methods with underscore (eg. `_isValidType()`) is useful to indicate that it should never be called from outside a class.
     - To clarify, as far as I know, there are no supported ways of creating true private methods. I'm for the use of underscore dangles as a visual communication tool to convey "hands off from outside the class".
 
 ### 3. Testing (with Jest)
@@ -146,7 +146,7 @@ describe('StorageDevice', () => {
 ### 4. Object oriented programming
 
 - No need for redundant `super()`. If a class extends another base class and doesn't have any additional instance variables or methods, there's no need to define a `constructor` and call `super()`. Just declaring `class Cone extends IceCreamContainer {}` will do.
-- Pass instances around, not specific values. Instead of `deposit('Ice Cream Block', 100)`, it's much clearer to do `deposit(new IceCreamBlock(), 100)` and handle the deposition logic in the method itself.
+- Pass classes around, not specific values. Instead of `deposit('Ice Cream Block', 100)`, it's much clearer to do `deposit(IceCreamBlock, 100)` and handle the deposition logic in the method itself.
     - This was a decision recurred so many times that I had to write this down as a rule for myself - pass around instances (objects) instead of literal values that might represent the same thing, because it's easier to reason about.
 - Not a good idea to call `someObj.hasOwnProperty()` directly due to 2 reasons:
     - If an object was created with `Object.create(null)`, which apparently is a common use case for creating a Map data structure in JavaScript, that object would not have the `hasOwnProperty` property in its prototype chain! And if it is called, things break. See [this linter rule](https://eslint.org/docs/rules/no-prototype-builtins).
@@ -160,3 +160,5 @@ describe('StorageDevice', () => {
 ## Todo
 
 - Add JSDoc docstrings to all classes and methods
+- Make all in-game items inherit from a GameItem class with default properties and methods:
+    - properties: getNameString

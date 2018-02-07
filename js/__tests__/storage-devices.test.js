@@ -10,10 +10,6 @@ function createShelf() {
   return new StorageDevice([Cone, Cup, Tub]);
 }
 
-// function createFridge() {
-//   return new StorageDevice([IceCreamBlock]);
-// }
-
 function createUniversalStorage() {
   // universal storage can accept all in-game items
   return new StorageDevice(inGameItemsMasterList);
@@ -47,11 +43,6 @@ describe('StorageDevice', () => {
     it('should return `false` if `qty` is a negative integer', () => {
       expect(storage.deposit(Tub, -1)).toBe(false);
     });
-    it('should throw `Error` if `item` does not have a `getNameString()` static method', () => {
-      class MockItem extends Cone {}
-      delete MockItem.getNameString;
-      expect(() => storage.deposit(MockItem)).toThrow(Error);
-    });
     it('should throw `TypeError` if invalid type of `item` is being deposited', () => {
       const shelf = createShelf();
       expect(() => shelf.deposit(IceCreamBlock)).toThrow(GamePlayError);
@@ -72,14 +63,42 @@ describe('StorageDevice', () => {
     });
   });
 
-  describe('when retrieved from using `retrieve(itemClass, qty)`', () => {
-    it('should decrease `store` item quantity accordingly', () => {});
-    it('should throw Error if invalid class is requested', () => {});
-    it('should return `null` if `qty` requested for exceeds stored quantity', () => {});
+  describe('when checking stock of an item with `checkStockFor(itemClass)`', () => {
+    it('should return 0 if item does not exist in store', () => {
+      const shelf = createShelf();
+      expect(shelf.checkStockFor(IceCreamBlock)).toBe(0);
+    });
+    it('should return quantity of item in store', () => {
+      storage.deposit(Tub, 101);
+      storage.deposit(Cup, 102);
+      storage.deposit(Cone, 103);
+      storage.deposit(IceCreamBlock, 104);
+      expect(storage.checkStockFor(Tub)).toBe(101);
+      expect(storage.checkStockFor(Cup)).toBe(102);
+      expect(storage.checkStockFor(Cone)).toBe(103);
+      expect(storage.checkStockFor(IceCreamBlock)).toBe(104);
+    });
   });
 
-  describe('when checking stock of an item with `checkStockFor(itemClass)`', () => {
-    it('should return 0 if item does not exist in store', () => {});
-    it('should return quantity of item in store', () => {});
+  describe('when withdrawn from using `withdraw(itemClass, qty)`', () => {
+    it('should return integer indicating `qty` actually withdrawn', () => {
+      storage.deposit(Cone, 3);
+      expect(storage.withdraw(Cone, 2)).toBe(2);
+    });
+    it('should decrease `store` item quantity accordingly', () => {
+      storage.deposit(Cone, 1);
+      storage.withdraw(Cone, 1);
+      expect(storage.checkStockFor(Cone)).toBe(0);
+    });
+    it('should withdraw max if `qty` exceeds stored amount and return integer', () => {
+      storage.deposit(Cone, 3);
+      expect(storage.withdraw(Cone, 4)).toBe(3);
+      expect(storage.checkStockFor(Cone)).toBe(0);
+    });
+    it('should throw Error if invalid class is requested', () => {
+      expect(() => storage.withdraw('', 1)).toThrow(TypeError);
+      expect(() => storage.withdraw({}, 1)).toThrow(TypeError);
+      expect(() => storage.withdraw(new Cone(), 1)).toThrow(TypeError);
+    });
   });
 });

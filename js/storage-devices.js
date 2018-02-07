@@ -1,8 +1,13 @@
-const { IceCreamBlock } = require('./ice-cream');
 const { GamePlayError } = require('./errors');
 
 /**
- * items: array of classes
+ * StorageDevice to hold in-game items.
+ *
+ * Use to create shelf and fridge by specifying types of objects
+ * the instance is supposed to be able to store.
+ *
+ * Args
+ * items: array of classes that the instance will accept for storage
  */
 class StorageDevice {
   constructor(items) {
@@ -37,23 +42,33 @@ StorageDevice.prototype.deposit = function deposit(itemClass, qty = 0) {
   if (typeof itemClass !== 'function') throw new TypeError('deposit() must be passed a class as first argument');
   if (qty < 0) return false;
 
+  if (!this._isValidItemClass(itemClass)) throw new GamePlayError('This item does not belong here.');
+
   const quantity = Math.floor(qty);
-  let itemType = '';
-
-  if (Object.prototype.hasOwnProperty.call(itemClass, 'getNameString')) {
-    itemType = itemClass.getNameString();
-  } else {
-    throw new Error('deposit() first argument class does not have a `getNameString()` static method');
-  }
-
-  if (!this._isValidType(itemType)) throw new GamePlayError('This item does not belong here.');
-
-  this.store[itemType] += quantity;
+  this.store[itemClass.getNameString()] += quantity;
   return true;
 };
 
-StorageDevice.prototype._isValidType = function _isValidType(type) {
-  if (this.itemTypes.includes(type)) return true;
+StorageDevice.prototype.withdraw = function withdraw(itemClass, qty = 0) {
+  if (typeof itemClass !== 'function') throw new TypeError('withdraw() must be passed a class as first argument');
+
+  if (!this._isValidItemClass(itemClass)) return 0;
+
+  const stock = this.checkStockFor(itemClass);
+  const withdrawQty = qty <= stock ? qty : stock;
+
+  this.store[itemClass.getNameString()] -= withdrawQty;
+  return withdrawQty;
+};
+
+StorageDevice.prototype.checkStockFor = function checkStockFor(itemClass) {
+  if (!this._isValidItemClass(itemClass)) return 0;
+  return this.store[itemClass.getNameString()];
+};
+
+StorageDevice.prototype._isValidItemClass = function _isValidItemClass(itemClass) {
+  if (!Object.prototype.hasOwnProperty.call(itemClass, 'getNameString')) return false;
+  if (this.itemTypes.includes(itemClass.getNameString())) return true;
   return false;
 };
 
