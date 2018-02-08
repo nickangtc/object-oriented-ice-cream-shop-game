@@ -1,5 +1,5 @@
 const {
-  Vessel,
+  IceCreamHolder,
   Cone,
   Cup,
   Tub,
@@ -15,35 +15,35 @@ function fillContainer(container) {
 }
 
 // Tests
-describe('Vessel', () => {
+describe('IceCreamHolder', () => {
   it('instance `nameString` is "Ice Cream Container"', () => {
-    const container = new Vessel();
+    const container = new IceCreamHolder();
     expect(container.nameString).toEqual('Ice Cream Container');
   });
   it('instance `capacityInScoops` defaults to 1', () => {
-    const container = new Vessel();
+    const container = new IceCreamHolder();
     expect(container.capacityInScoops).toBe(1);
   });
   it('instance `scoops` defaults to an empty array', () => {
-    const container = new Vessel();
+    const container = new IceCreamHolder();
     expect(container.scoops).toEqual([]);
   });
 
   describe('when added to, using `add(iceCream)`', () => {
     it('should hold an instance of `ScoopOfIceCream` if an instance is passed in', () => {
-      const container = new Vessel();
+      const container = new IceCreamHolder();
       const scoop = new ScoopOfIceCream();
       container.add(scoop);
       expect(container.scoops[0]).toEqual(scoop);
     });
     it('should throw Error if value passed in is not instance of `ScoopOfIceCream`', () => {
-      const container = new Vessel();
+      const container = new IceCreamHolder();
       expect(() => {
         container.add('fake scoop of ice cream');
       }).toThrow(TypeError);
     });
     it('should throw Error if container is already full', () => {
-      const container = new Vessel();
+      const container = new IceCreamHolder();
       const scoop = new ScoopOfIceCream();
       fillContainer(container);
 
@@ -55,7 +55,7 @@ describe('Vessel', () => {
 
   describe('when checked for capacity using `isFull()`', () => {
     it('should return the correct boolean value', () => {
-      const container = new Vessel();
+      const container = new IceCreamHolder();
       expect(container.isFull()).toBe(false);
 
       fillContainer(container);

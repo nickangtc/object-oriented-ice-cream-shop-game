@@ -70,14 +70,14 @@ My ESLint extends "airbnb-base" ([package](https://github.com/airbnb/javascript/
 ```js
 // This won't work because the error is not caught and will stop runtime
 it('should throw Error if value passed in is not instance of `ScoopOfIceCream`', () => {
-  const container = new Vessel();
+  const container = new IceCreamHolder();
   expect(container.add('fake scoop of ice cream'))
     .toThrow('you must pass `ScoopOfIceCream` instance into add()');
 });
 
 // This works - wrapping with another function will catch the error and let .toThrow() test pass
 it('should throw Error if value passed in is not instance of `ScoopOfIceCream`', () => {
-  const container = new Vessel();
+  const container = new IceCreamHolder();
   expect(() => {
     container.add('fake scoop of ice cream');
   }).toThrow('you must pass `ScoopOfIceCream` instance into add()');
@@ -88,7 +88,7 @@ it('should throw Error if value passed in is not instance of `ScoopOfIceCream`',
 
 ```javascript
 // descriptions only at first
-describe('StorageDevice', () => {
+describe('Storage', () => {
   it('instance `nameString` is "Storage Device"', () => {});
   it('instance `store` is initially an empty object', () => {});
 
@@ -105,9 +105,9 @@ describe('StorageDevice', () => {
 });
 
 // then add test code
-describe('StorageDevice', () => {
+describe('Storage', () => {
   it('instance `nameString` is "Storage Device"', () => {
-    const storage = new StorageDevice();
+    const storage = new Storage();
     expect(storage.nameString).toBe('Storage Device');
   });
   it('instance `store` is initially an empty object', () => {
@@ -120,10 +120,10 @@ describe('StorageDevice', () => {
 - `beforeEach()` applies to all nested `it()` or `test()` regardless of level. The top-level `beforeEach()` will still run for nested `it()`s inside nested `describe()`s, unless overridden by a closer scoped `beforeEach()`:
 
 ```javascript
-describe('StorageDevice', () => {
+describe('Storage', () => {
   let storage = {};
   // Top-level beforeEach() will run for ALL subsequent it() blocks
-  beforeEach(() => { storage = new StorageDevice(); });
+  beforeEach(() => { storage = new Storage(); });
 
   it('instance `nameString` is "Storage Device"', () => {
     expect(storage.nameString).toBe('Storage Device');
@@ -145,7 +145,7 @@ describe('StorageDevice', () => {
 
 ### 4. Object oriented programming
 
-- No need for redundant `super()`. If a class extends another base class and doesn't have any additional instance variables or methods, there's no need to define a `constructor` and call `super()`. Just declaring `class Cone extends Vessel {}` will do.
+- No need for redundant `super()`. If a class extends another base class and doesn't have any additional instance variables or methods, there's no need to define a `constructor` and call `super()`. Just declaring `class Cone extends IceCreamHolder {}` will do.
 - Pass classes around, not specific values. Instead of `deposit('Ice Cream Block', 100)`, it's much clearer to do `deposit(IceCreamBlock, 100)` and handle the deposition logic in the method itself.
     - This was a decision recurred so many times that I had to write this down as a rule for myself - pass around instances (objects) instead of literal values that might represent the same thing, because it's easier to reason about.
 - Not a good idea to call `someObj.hasOwnProperty()` directly due to 2 reasons:

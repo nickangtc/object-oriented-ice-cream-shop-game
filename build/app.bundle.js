@@ -60,30 +60,11 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _iceCream = __webpack_require__(1);
-
-var _vessel = __webpack_require__(2);
-
-$(document).ready(function () {
-  console.log(_iceCream.IceCreamBlock);
-  console.log(_iceCream.ScoopOfIceCream);
-  console.log(_vessel.Cone);
-  console.log(_vessel.Cup);
-  console.log(_vessel.Tub);
-});
-
-/***/ }),
-/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -151,6 +132,25 @@ module.exports = {
 };
 
 /***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _iceCream = __webpack_require__(0);
+
+var _vessel = __webpack_require__(2);
+
+$(document).ready(function () {
+  console.log(_iceCream.IceCreamBlock);
+  console.log(_iceCream.ScoopOfIceCream);
+  console.log(_vessel.Cone);
+  console.log(_vessel.Cup);
+  console.log(_vessel.Tub);
+});
+
+/***/ }),
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -165,50 +165,50 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var _require = __webpack_require__(1),
+var _require = __webpack_require__(0),
     ScoopOfIceCream = _require.ScoopOfIceCream;
 
 /**
- * Vessel to hold ScoopOfIceCream.
+ * IceCreamHolder to hold ScoopOfIceCream.
  */
 
 
-var Vessel = function () {
-  function Vessel() {
-    _classCallCheck(this, Vessel);
+var IceCreamHolder = function () {
+  function IceCreamHolder() {
+    _classCallCheck(this, IceCreamHolder);
 
     this.scoops = [];
   }
 
-  _createClass(Vessel, null, [{
+  _createClass(IceCreamHolder, null, [{
     key: 'getNameString',
     value: function getNameString() {
       return 'Ice Cream Container';
     }
   }]);
 
-  return Vessel;
+  return IceCreamHolder;
 }();
 
-Vessel.prototype.nameString = Vessel.getNameString();
-Vessel.prototype.capacityInScoops = 1;
-Vessel.prototype.add = function add(scoop) {
+IceCreamHolder.prototype.nameString = IceCreamHolder.getNameString();
+IceCreamHolder.prototype.capacityInScoops = 1;
+IceCreamHolder.prototype.add = function add(scoop) {
   if (!(scoop instanceof ScoopOfIceCream)) {
     throw new TypeError('you must pass `ScoopOfIceCream` instance into add()');
   }
   if (this.isFull()) throw new Error('container is already full');
   this.scoops.push(scoop);
 };
-Vessel.prototype.isFull = function isFull() {
+IceCreamHolder.prototype.isFull = function isFull() {
   return this.scoops.length === this.capacityInScoops;
 };
 
 /**
- * Cone container that extends from Vessel.
+ * Cone container that extends from IceCreamHolder.
  */
 
-var Cone = function (_Vessel) {
-  _inherits(Cone, _Vessel);
+var Cone = function (_IceCreamHolder) {
+  _inherits(Cone, _IceCreamHolder);
 
   function Cone() {
     _classCallCheck(this, Cone);
@@ -224,17 +224,17 @@ var Cone = function (_Vessel) {
   }]);
 
   return Cone;
-}(Vessel);
+}(IceCreamHolder);
 
 Cone.prototype.nameString = Cone.getNameString();
 Cone.prototype.capacityInScoops = 3;
 
 /**
- * Cup container that extends from Vessel.
+ * Cup container that extends from IceCreamHolder.
  */
 
-var Cup = function (_Vessel2) {
-  _inherits(Cup, _Vessel2);
+var Cup = function (_IceCreamHolder2) {
+  _inherits(Cup, _IceCreamHolder2);
 
   function Cup() {
     _classCallCheck(this, Cup);
@@ -250,17 +250,17 @@ var Cup = function (_Vessel2) {
   }]);
 
   return Cup;
-}(Vessel);
+}(IceCreamHolder);
 
 Cup.prototype.nameString = Cup.getNameString();
 Cup.prototype.capacityInScoops = 2;
 
 /**
- * Tub container that extends from Vessel.
+ * Tub container that extends from IceCreamHolder.
  */
 
-var Tub = function (_Vessel3) {
-  _inherits(Tub, _Vessel3);
+var Tub = function (_IceCreamHolder3) {
+  _inherits(Tub, _IceCreamHolder3);
 
   function Tub() {
     _classCallCheck(this, Tub);
@@ -276,13 +276,13 @@ var Tub = function (_Vessel3) {
   }]);
 
   return Tub;
-}(Vessel);
+}(IceCreamHolder);
 
 Tub.prototype.nameString = Tub.getNameString();
 Tub.prototype.capacityInScoops = 10;
 
 module.exports = {
-  Vessel: Vessel,
+  IceCreamHolder: IceCreamHolder,
   Cone: Cone,
   Cup: Cup,
   Tub: Tub

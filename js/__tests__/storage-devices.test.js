@@ -1,4 +1,4 @@
-const { StorageDevice } = require('../storage-devices');
+const { Storage } = require('../storage-devices');
 const { IceCreamBlock } = require('../ice-cream');
 const { Cone, Cup, Tub } = require('../vessel');
 const { GamePlayError } = require('../errors');
@@ -7,20 +7,20 @@ const { GamePlayError } = require('../errors');
 const inGameItemsMasterList = [Cone, Cup, Tub, IceCreamBlock];
 
 function createShelf() {
-  return new StorageDevice([Cone, Cup, Tub]);
+  return new Storage([Cone, Cup, Tub]);
 }
 
 function createUniversalStorage() {
   // universal storage can accept all in-game items
-  return new StorageDevice(inGameItemsMasterList);
+  return new Storage(inGameItemsMasterList);
 }
 
-describe('StorageDevice', () => {
+describe('Storage', () => {
   let storage = {};
   beforeEach(() => { storage = createUniversalStorage(); });
 
   it('instance must be initialised with an array of classes', () => {
-    expect(() => new StorageDevice([])).toThrow(Error);
+    expect(() => new Storage([])).toThrow(Error);
   });
   it('instance `nameString` is "Storage Device"', () => {
     expect(storage.nameString).toBe('Storage Device');
