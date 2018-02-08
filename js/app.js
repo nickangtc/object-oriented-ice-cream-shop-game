@@ -1,9 +1,10 @@
-import { Vessel, IceCreamBlock } from './constructors';
+import { IceCreamBlock, ScoopOfIceCream } from './ice-cream';
+import { Cone, Cup, Tub } from './vessel';
 
 $(document).ready(() => {
-  console.log('jquery loaded');
-
-  const ic = new IceCreamBlock();
-
-  console.log(ic.scoop());
+  console.log(IceCreamBlock);
+  console.log(ScoopOfIceCream);
+  console.log(Cone);
+  console.log(Cup);
+  console.log(Tub);
 });
